@@ -45,8 +45,8 @@ Brief description of the fourth task.
 
 ## How to Contribute
 
-If you have any suggestions, feedback, or updates regarding the tasks, feel free to open an issue or create a pull request. Your contributions are highly appreciated!
+If you have any suggestions, feedback, or updates regarding the tasks, feel free to open an issue or create a pull request. Your inputs are highly appreciated!
 
-Thank you for visiting this repository, and let's make this internship a great learning experience!
+
 
 
