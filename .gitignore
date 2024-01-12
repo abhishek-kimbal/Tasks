@@ -1,0 +1,11 @@
+# .gitignore for Python projects
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.idea/
+*.egg-info/
+dist/
+build/
+.env/
+.gitignore
