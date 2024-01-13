@@ -1,6 +1,6 @@
 import pandas as pd
 
-def create_excel_file(file_path='employees_multi_sheets.xlsx'):
+def create_excel_file(file_path='datasets/employees_multi_sheets.xlsx'):
     sheet1_data = {'Name': ['Rohan', 'Sneha', 'Aryan', 'Ananya', 'Vikram'],
                    'Salary': [50000, 60000, 55000, 70000, 48000]}
 
