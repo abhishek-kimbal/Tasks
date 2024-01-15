@@ -8,10 +8,12 @@ password = 'admin'
 host = 'localhost'
 port = 5432
 
+
 # Function to establish a connection to the database
 def connect():
     connection = psycopg2.connect(dbname=dbName, user=user, password=password, host=host, port=port)
     return connection, connection.cursor()
+
 
 # Function to create the table (if not exists)
 def createTable(cursor):
@@ -24,6 +26,7 @@ def createTable(cursor):
     '''
     cursor.execute(createTableQuery)
 
+
 # Function to insert data into the table
 def insertData(cursor, name, age):
     insertQuery = sql.SQL('INSERT INTO sample_data (name, age) VALUES ({}, {})').format(
@@ -31,6 +34,7 @@ def insertData(cursor, name, age):
         sql.Literal(age)
     )
     cursor.execute(insertQuery)
+
 
 # Function to read data from the table
 def readData(cursor):
@@ -41,20 +45,24 @@ def readData(cursor):
     for row in rows:
         print(row)
 
+
 # Function to update data in the table
 def updateData(cursor, name, newAge):
     updateQuery = 'UPDATE sample_data SET age = %s WHERE name = %s'
     cursor.execute(updateQuery, (newAge, name))
+
 
 # Function to delete data from the table
 def deleteData(cursor, name):
     deleteQuery = 'DELETE FROM sample_data WHERE name = %s'
     cursor.execute(deleteQuery, (name,))
 
+
 # Function to close the cursor and connection
 def closeConnection(connection, cursor):
     cursor.close()
     connection.close()
+
 
 # Main program
 try:

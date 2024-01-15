@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 
+
 def clean_and_preprocess_titanic_data(input_file='datasets/titanic.csv', output_file='datasets/titanic_cleaned.csv'):
     print("\n\n-------------------------------------------------------------")
 
@@ -31,6 +32,7 @@ def clean_and_preprocess_titanic_data(input_file='datasets/titanic.csv', output_
     print(f"\nDimensions of the CSV File (Rows, Columns): {num_rows}, {num_cols - 1}")
 
     print("\n\n-------------------------------------------------------------")
+
 
 # Example usage
 clean_and_preprocess_titanic_data()

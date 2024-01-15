@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def create_excel_file(file_path='datasets/employees_multi_sheets.xlsx'):
     sheet1_data = {'Name': ['Rohan', 'Sneha', 'Aryan', 'Ananya', 'Vikram'],
                    'Salary': [50000, 60000, 55000, 70000, 48000]}
@@ -17,7 +18,8 @@ def create_excel_file(file_path='datasets/employees_multi_sheets.xlsx'):
 
     print(f"Excel file '{file_path}' created with 3 sheets.")
 
-def read_excel_file(file_path='employees_multi_sheets.xlsx'):
+
+def read_excel_file(file_path='datasets/employees_multi_sheets.xlsx'):
     try:
         xls = pd.ExcelFile(file_path)
         print("\nContent of the Excel file:")
@@ -27,6 +29,7 @@ def read_excel_file(file_path='employees_multi_sheets.xlsx'):
             print(df)
     except FileNotFoundError:
         print(f"File '{file_path}' not found. Please create the Excel file first.")
+
 
 # Example usage
 create_excel_file()
