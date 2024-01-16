@@ -17,7 +17,7 @@ def create_excel_file(file_path='datasets/employees_multi_sheets.xlsx'):
 
     print(f"Excel file '{file_path}' created with 3 sheets.")
 
-def read_excel_file(file_path='employees_multi_sheets.xlsx'):
+def read_excel_file(file_path='datasets/employees_multi_sheets.xlsx'):
     try:
         xls = pd.ExcelFile(file_path)
         print("\nContent of the Excel file:")

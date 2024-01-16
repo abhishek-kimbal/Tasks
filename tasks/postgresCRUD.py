@@ -8,6 +8,7 @@ password = 'admin'
 host = 'localhost'
 port = 5432
 
+
 # Function to establish a connection to the database
 def connect():
     connection = psycopg2.connect(dbname=dbName, user=user, password=password, host=host, port=port)
