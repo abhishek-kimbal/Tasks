@@ -1,7 +1,12 @@
 import pandas as pd
 import os
 
+<<<<<<< HEAD
 def clean_and_preprocess_titanic_data(input_file='datasets/titanic.csv', output_file_csv='datasets/titanic_cleaned.csv', output_file_excel='datasets/titanic_cleaned.xlsx'):
+=======
+
+def clean_and_preprocess_titanic_data(input_file='datasets/titanic.csv', output_file='datasets/titanic_cleaned.csv'):
+>>>>>>> 149bb0447dd25a1e1c7cd16e4d1bba6462b0dc1d
     print("\n\n-------------------------------------------------------------")
 
     df = pd.read_csv(input_file, sep=',')
@@ -34,6 +39,7 @@ def clean_and_preprocess_titanic_data(input_file='datasets/titanic.csv', output_
     print(f"\nDimensions of the CSV File (Rows, Columns): {num_rows}, {num_cols - 1}")
 
     print("\n\n-------------------------------------------------------------")
+
 
 # Example usage
 clean_and_preprocess_titanic_data()
