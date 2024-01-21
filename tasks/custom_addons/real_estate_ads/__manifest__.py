@@ -10,7 +10,11 @@
     "category": "Sales",
     "version": '16.0.1.0.0',
     "depends": [],
-    "data": [],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/property_view.xml",
+        "views/menu_items.xml",
+    ],
     "demo": [],
     "installable": True,
     "application": True,
