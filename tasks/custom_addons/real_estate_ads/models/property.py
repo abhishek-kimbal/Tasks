@@ -22,6 +22,9 @@ class Property(models.Model):
     garden_area = fields.Integer(String="Garden Area")
     garden_orientation = fields.Selection([('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
                                           String="Garden Orientation", default='north')
+    offer_ids = fields.One2many('estate.property.offer', 'property_id', String='Offers')
+    sales_id = fields.Many2one('res.users', String="Salesman")
+    buyer_id = fields.Many2one('res.partner', String="Buyer", domain=[('is_company', '=', True)])
 
 
 

@@ -9,7 +9,7 @@
     """,
     "category": "Sales",
     "version": '16.0.1.0.0',
-    "depends": [],
+    "depends": ["base"],
     "data": [
         "security/ir.model.access.csv",
         "views/property_view.xml",
