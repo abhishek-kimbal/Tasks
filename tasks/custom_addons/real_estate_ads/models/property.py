@@ -3,9 +3,10 @@ from odoo import fields, models
 
 class Property(models.Model):
     _name = 'estate.property'
-    _description = 'model description'
+    _description = 'Property model description'
 
     name = fields.Char(String="Name", required = "True")
+    type_id = fields.Many2one('estate.property.type', string="Property Type")
     description = fields.Text(String="Description")
     postcode = fields.Char(String="postcode")
     data_availability = fields.Date(String="Available From")
@@ -20,3 +21,13 @@ class Property(models.Model):
     garden_area = fields.Integer(String="Garden Area")
     garden_orientation = fields.Selection([('north', 'North'), ('south', 'South'), ('east', 'East'), ('west', 'West')],
                                           String="Garden Orientation", default='north')
+
+
+
+class PropertyType(models.Model):
+    _name = 'estate.property.type'
+    _description = 'model description'
+
+    name = fields.Char(String="Name", required = "True")
+
+
