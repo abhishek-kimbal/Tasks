@@ -25,14 +25,22 @@ class Property(models.Model):
     offer_ids = fields.One2many('estate.property.offer', 'property_id', String='Offers')
     sales_id = fields.Many2one('res.users', String="Salesman")
     buyer_id = fields.Many2one('res.partner', String="Buyer", domain=[('is_company', '=', True)])
+    phone = fields.Char(String="Phone", related= "buyer_id.phone")
 
-    @api.depends('garden_area', 'living_area')
-    def _compute_total_area(self):
-        for rec in self:
-            rec.total_area = rec. garden_area + rec. living_area
+    @api.onchange('living_area', 'garden_area')
+    def _onchange_total_area(self):
+        self.total_area = self.living_area + self.garden_area
+
+    total_area = fields.Integer(String="Total Area")
 
 
-    total_area = fields.Integer(String="Total Area", compute=_compute_total_area)
+    # @api.depends('garden_area', 'living_area')
+    # def _compute_total_area(self):
+    #     for rec in self:
+    #         rec.total_area = rec. garden_area + rec. living_area
+
+
+    # total_area = fields.Integer(String="Total Area", compute=_compute_total_area)
 
 
 
