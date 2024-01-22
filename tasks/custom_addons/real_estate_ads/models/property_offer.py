@@ -3,17 +3,37 @@ from datetime import timedelta
 from odoo.exceptions import ValidationError
 
 
+class AbstractOffer(models.AbstractModel):
+    _name = 'abstract.model.offer'
+    _description = 'Abstract Offers'
+
+    partner_email = fields.Char(string="Email")
+    partner_phone = fields.Char(string="Phone Number")
+
+
+# class TransientOffer(models.TransientModel):
+#     _name = 'abstract.model.offer'
+#     _description = 'Transient Offers'
+#
+#     @api.autovacuum
+#     def _transient_vacuum(self):
+#
+#     partner_email = fields.Char(string="Email")
+#     partner_phone = fields.Char(string="Phone Number")
+
+
 class PropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'Estate Property Offers'
+    _inherit = ['abstract.model.offer']
 
-    @api.depends('property_id','partner_id')
+    @api.depends('property_id', 'partner_id')
     def _compute_name(self):
         for rec in self:
             if rec.property_id and rec.partner_id:
-                rec.name=f"{rec.property_id.name}- {rec.partner_id.name}"
+                rec.name = f"{rec.property_id.name}- {rec.partner_id.name}"
             else:
-                rec.name=False
+                rec.name = False
 
     name = fields.Char(String="Description", compute=_compute_name)
 
@@ -48,7 +68,6 @@ class PropertyOffer(models.Model):
             else:
                 rec.deadline = False
 
-
     def _inverse_deadline(self):
         for rec in self:
             if rec.deadline and rec.creation_date:
@@ -67,7 +86,7 @@ class PropertyOffer(models.Model):
     @api.constrains('validity')
     def _check_validity(self):
         for rec in self:
-            if rec.deadline<=rec.creation_date:
+            if rec.deadline <= rec.creation_date:
                 raise ValidationError("Deadline cannot be on or before creation date!")
 
     def action_accept_offer(self):
@@ -106,10 +125,7 @@ class PropertyOffer(models.Model):
     #     #print(res_partner_ids)
     #     return super(PropertyOffer,self).write(vals)
 
-
     #
     # @api.autovacuum
     # def _clean_offers(self):
     #     self.search([('status','=','refused')]).unlink()
-
-

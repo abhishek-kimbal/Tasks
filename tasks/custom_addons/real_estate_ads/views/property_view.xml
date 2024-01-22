@@ -47,8 +47,8 @@
                     </div>
 
                         <group>
-                            <field name="name"/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
+                            <field name="name" placeholder="Namee"/>
+                            <field name="tag_ids" placeholder="Tags" widget="many2many_tags" options="{'color_field':'color'}"/>
                             <group>
 <!--                                <field name="state"/>-->
                                 <field name="type_id"/>

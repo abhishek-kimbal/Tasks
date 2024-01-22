@@ -33,7 +33,7 @@
                                 <field name="creation_date" readonly="1"/>
                                 <field name="validity"/>
                                 <field name="deadline"/>
-<!--                                <field name="partner_email"/>-->
+                                <field name="partner_email"/>
                            </group>
                         </group>
                     </sheet>
