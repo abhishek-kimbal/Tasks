@@ -1,4 +1,6 @@
-from odoo import fields, models
+from odoo import fields, models, api
+from datetime import timedelta
+# from odoo.exceptions import ValidationError
 
 
 class PropertyOffer(models.Model):
@@ -12,6 +14,22 @@ class PropertyOffer(models.Model):
     property_id = fields.Many2one('estate.property', string="Property")
     validity = fields.Integer(string='Validity')
     deadline = fields.Date(string='Deadline', compute='compute_deadline', inverse='_inverse_deadline')
+
+
     creation_date = fields.Date(string='Create Date')
 
+    @api.depends('validity', 'creation_date')
+    def compute_deadline(self):
+        for rec in self:
+            if rec.creation_date and rec.validity:
+                rec.deadline = rec.creation_date + timedelta(days=rec.validity)
+            else:
+                rec.deadline = False
 
+
+    def _inverse_deadline(self):
+        for rec in self:
+            if rec.deadline and rec.creation_date:
+                rec.validity = (rec.deadline - rec.creation_date).days
+            else:
+                rec.validity = False
