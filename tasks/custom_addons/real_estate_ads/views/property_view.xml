@@ -41,14 +41,14 @@
                     </header>
                     <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" name="action_property_view_offers" type="object">
+                        <button class="oe_stat_button" name="action_property_view_offers" type="object" icon="fa-handshake-o">
                             <field name="offer_count" string="Offers" widget="statinfo"/>
                         </button>
                     </div>
 
                         <group>
                             <field name="name"/>
-                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field':'color'}"/>
                             <group>
 <!--                                <field name="state"/>-->
                                 <field name="type_id"/>
@@ -70,20 +70,23 @@
                                         <field name="facades"/>
                                         <field name="garage"/>
                                         <field name="garden"/>
-                                        <field name="garden_area"/>
-                                        <field name="garden_orientation"/>
+                                        <field name="garden_area" attrs="{'invisible': [('garden','=',False)]}"/>
+                                        <field name="garden_orientation" attrs="{'invisible': [('garden','=',False)]}"/>
                                         <field name="total_area"/>
                                     </group>
                                 </page>
                                 <page string="Offers">
                                     <field name="offer_ids">
-                                        <tree editable="bottom">
+                                        <tree editable="bottom" decoration-success="status=='accepted'" decoration-danger="status=='refused'">
                                             <field name="price"/>
                                             <field name="partner_id"/>
-                                            <field name="creation_date"/>
+                                            <field name="creation_date" invisible="1"/>
                                             <field name="validity"/>
                                             <field name="deadline"/>
-                                            <field name="status" nolable="1"/>
+                                            <field name="status" readonly="1"/>
+                                            <button name="action_accept_offer" type="object" icon="fa-check" string="Accept"/>
+                                            <button name="action_decline_offer" type="object" icon="fa-times" string="Decline"/>
+
                                         </tree>
                                     </field>
                                 </page>

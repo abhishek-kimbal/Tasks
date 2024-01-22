@@ -20,8 +20,8 @@ class Property(models.Model):
     postcode = fields.Char(String="postcode")
     data_availability = fields.Date(String="Available From")
     expected_price = fields.Float(String="Expected Price")
-    best_offer = fields.Float(String="Best Offer")
-    selling_price = fields.Float(String="Selling Price")
+    best_offer = fields.Float(String="Best Offer", compute="_compute_best_price")
+    selling_price = fields.Float(String="Selling Price", readonly=True)
     bedrooms = fields.Integer(String="Bedrooms")
     living_area = fields.Integer(String="Living Area(sqm)")
     facades = fields.Integer(String="Facades")
@@ -64,6 +64,14 @@ class Property(models.Model):
             'res_model': 'estate.property.offer'
         }
 
+    @api.depends('offer_ids')
+    def _compute_best_price(self):
+        for rec in self:
+            if rec.offer_ids:
+                rec.best_offer = max(rec.offer_ids.mapped('price'))
+            else:
+                rec.best_offer = 0
+
 
     # @api.depends('garden_area', 'living_area')
     # def _compute_total_area(self):
@@ -89,5 +97,6 @@ class PropertyTag(models.Model):
     _description = 'PropertyTag model description'
 
     name = fields.Char(String="Name", required = "True")
+    color = fields.Integer(string="Color")
 
 

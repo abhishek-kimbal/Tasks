@@ -22,20 +22,20 @@ class PropertyOffer(models.Model):
                               string="Status")
     partner_id = fields.Many2one('res.partner', string="Customer")
     property_id = fields.Many2one('estate.property', string="Property")
-    validity = fields.Integer(string='Validity')
+    validity = fields.Integer(string='Validity', default=7)
     deadline = fields.Date(string='Deadline', compute='compute_deadline', inverse='_inverse_deadline')
 
     # _sql_constraints=[
     #     ('check_validity','check(validity>0)','Deadline cannot be less than or equal to creation date')
     # ]
 
-    # @api.model
-    # def _set_create_date(self):
-    #     return fields.Date.today()
+    @api.model
+    def _set_create_date(self):
+        return fields.Date.today()
 
-    creation_date = fields.Date(string='Create Date')
+    # creation_date = fields.Date(string='Create Date')
 
-    # creation_date = fields.Date(string='Create Date', default=_set_create_date)
+    creation_date = fields.Date(string='Create Date', default=_set_create_date)
 
     @api.depends('validity', 'creation_date')
     # @api.depends_context('uid')
@@ -56,19 +56,46 @@ class PropertyOffer(models.Model):
             else:
                 rec.validity = False
 
-    @api.model_create_multi
-    def create(self,vals):
-        for rec in vals:
-            if not rec.get('creation_date'):
-                rec['creation_date']=fields.Date.today()
-
-        return super(PropertyOffer,self).create(vals)
+    # @api.model_create_multi
+    # def create(self,vals):
+    #     for rec in vals:
+    #         if not rec.get('creation_date'):
+    #             rec['creation_date']=fields.Date.today()
+    #
+    #     return super(PropertyOffer,self).create(vals)
 
     @api.constrains('validity')
     def _check_validity(self):
         for rec in self:
             if rec.deadline<=rec.creation_date:
                 raise ValidationError("Deadline cannot be on or before creation date!")
+
+    def action_accept_offer(self):
+        if self.property_id:
+            self._validate_accepted_offer()
+            self.property_id.write({
+                'selling_price': self.price,
+                'state': 'accepted'
+            })
+        self.status = "accepted"
+
+    def _validate_accepted_offer(self):
+        offer_ids = self.env['estate.property.offer'].search([
+            ('property_id', '=', self.property_id.id),
+            ('status', '=', 'accepted'),
+        ])
+
+        if offer_ids:
+            raise ValidationError("You have already accepted an offer")
+
+    def action_decline_offer(self):
+        self.status = 'refused'
+        if all(self.property_id.offer_ids.mapped('status')):
+            self.property_id.write({
+                'selling_price': 0,
+                'state': 'received'
+            })
+
     #
     # def write(self,vals):
     #     print(self.env.cr)
