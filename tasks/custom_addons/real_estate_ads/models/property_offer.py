@@ -3,12 +3,12 @@ from datetime import timedelta
 from odoo.exceptions import ValidationError
 
 
-class AbstractOffer(models.AbstractModel):
-    _name = 'abstract.model.offer'
-    _description = 'Abstract Offers'
-
-    partner_email = fields.Char(string="Email")
-    partner_phone = fields.Char(string="Phone Number")
+# class AbstractOffer(models.AbstractModel):
+#     _name = 'abstract.model.offer'
+#     _description = 'Abstract Offers'
+#
+#     partner_email = fields.Char(string="Email")
+#     partner_phone = fields.Char(string="Phone Number")
 
 
 # class TransientOffer(models.TransientModel):
@@ -25,7 +25,7 @@ class AbstractOffer(models.AbstractModel):
 class PropertyOffer(models.Model):
     _name = 'estate.property.offer'
     _description = 'Estate Property Offers'
-    _inherit = ['abstract.model.offer']
+    # _inherit = ['abstract.model.offer']
 
     @api.depends('property_id', 'partner_id')
     def _compute_name(self):

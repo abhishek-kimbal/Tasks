@@ -100,3 +100,4 @@ class PropertyTag(models.Model):
     color = fields.Integer(string="Color")
 
 
+
