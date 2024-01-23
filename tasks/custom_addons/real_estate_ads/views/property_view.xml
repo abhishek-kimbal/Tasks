@@ -21,7 +21,7 @@
                     <field name="type_id"/>
                     <field name="postcode"/>
                     <field name="data_availability"/>
-                    <field name="expected_price"/>
+                    <field name="expected_price" groups="real_estate_ads.group_property_manager"/>
                     <field name="best_offer"/>
                     <field name="selling_price"/>
                     <field name="state" widget="badge"/>
