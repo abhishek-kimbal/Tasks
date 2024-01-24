@@ -7,12 +7,17 @@ class Property(models.Model):
 
     name = fields.Char(String="Name", required = "True")
 
+    def _expand_state(self, states, domain, order):
+        return [
+            key for key, dummy in type(self).state.selection
+        ]
+
     state = fields.Selection([("new","New"),
                               ("received", "Offer Received"),
                               ("accepted","Offer Accepted"),
-                              ("sold","Sold"),
-                              ("cancel","cancelled")],
-                              default="new", string="Status")
+                              ("sold", "Sold"),
+                              ("cancel", "cancelled")
+                              ], default="new", string="Status", group_expand='_expand_state')
 
     tag_ids = fields.Many2many('estate.property.tag', string="Property Tag")
     type_id = fields.Many2one('estate.property.type', string="Property Type")
@@ -35,6 +40,8 @@ class Property(models.Model):
     buyer_id = fields.Many2one('res.partner', String="Buyer", domain=[('is_company', '=', True)])
     phone = fields.Char(String="Phone", related= "buyer_id.phone")
 
+
+
     @api.onchange('living_area', 'garden_area')
     def _onchange_total_area(self):
         self.total_area = self.living_area + self.garden_area
@@ -46,7 +53,6 @@ class Property(models.Model):
 
     def action_cancel(self):
         self.state = "cancel"
-
 
     @api.depends('offer_ids')
     def _compute_offer_count(self):
@@ -73,6 +79,7 @@ class Property(models.Model):
                 rec.best_offer = 0
 
 
+
     # @api.depends('garden_area', 'living_area')
     # def _compute_total_area(self):
     #     for rec in self:
@@ -83,11 +90,13 @@ class Property(models.Model):
 
 
 
+
 class PropertyType(models.Model):
     _name = 'estate.property.type'
     _description = 'PropertyType model description'
 
     name = fields.Char(String="Name", required = "True")
+
 
 
 

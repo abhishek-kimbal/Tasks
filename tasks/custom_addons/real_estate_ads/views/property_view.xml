@@ -82,11 +82,11 @@
             </field>
         </record>
 
-                <record id="estate_property_kanban_view" model="ir.ui.view">
+        <record id="estate_property_kanban_view" model="ir.ui.view">
             <field name="name">estate.property.kanban</field>
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="state" on_create="quick_create" quick_create_view="real_estate_ads.quick_create_estate_property_form_view">
+                <kanban on_create="quick_create" quick_create_view="real_estate_ads.quick_create_estate_property_form_view">
                     <field name="name"/>
                     <field name="state"/>
                     <field name="postcode"/>
@@ -116,9 +116,10 @@
             </field>
         </record>
 
-                <record id="quick_create_estate_property_form_view" model="ir.ui.view">
+        <record id="quick_create_estate_property_form_view" model="ir.ui.view">
             <field name="name">estate.property.form</field>
             <field name="model">estate.property</field>
+                    <field name="priority">1000</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
