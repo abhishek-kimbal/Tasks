@@ -11,6 +11,7 @@
     "version": '16.0.1.0.0',
     "depends": ["real_estate_ads", "base"],
     "data": [
+        "views/res_users.xml"
     ],
     "demo":[
     ],

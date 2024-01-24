@@ -37,13 +37,14 @@ class PropertyOffer(models.Model):
 
     name = fields.Char(String="Description", compute=_compute_name)
 
-    price = fields.Float(string="Price")
+    price = fields.Monetary(string="Price")
     status = fields.Selection([('accepted', 'Accepted'), ('refused', 'Refused')],
                               string="Status")
     partner_id = fields.Many2one('res.partner', string="Customer")
     property_id = fields.Many2one('estate.property', string="Property")
     validity = fields.Integer(string='Validity', default=7)
     deadline = fields.Date(string='Deadline', compute='compute_deadline', inverse='_inverse_deadline')
+    currency_id = fields.Many2one("res.currency", string="Currency", default = lambda self: self.env.user.company_id.currency_id)
 
     # _sql_constraints=[
     #     ('check_validity','check(validity>0)','Deadline cannot be less than or equal to creation date')

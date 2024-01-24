@@ -7,11 +7,6 @@ class Property(models.Model):
 
     name = fields.Char(String="Name", required = "True")
 
-    def _expand_state(self, states, domain, order):
-        return [
-            key for key, dummy in type(self).state.selection
-        ]
-
     state = fields.Selection([("new","New"),
                               ("received", "Offer Received"),
                               ("accepted","Offer Accepted"),
@@ -24,9 +19,9 @@ class Property(models.Model):
     description = fields.Text(String="Description")
     postcode = fields.Char(String="postcode")
     data_availability = fields.Date(String="Available From")
-    expected_price = fields.Float(String="Expected Price")
-    best_offer = fields.Float(String="Best Offer", compute="_compute_best_price")
-    selling_price = fields.Float(String="Selling Price", readonly=True)
+    expected_price = fields.Monetary(String="Expected Price")
+    best_offer = fields.Monetary(String="Best Offer", compute="_compute_best_price")
+    selling_price = fields.Monetary(String="Selling Price", readonly=True)
     bedrooms = fields.Integer(String="Bedrooms")
     living_area = fields.Integer(String="Living Area(sqm)")
     facades = fields.Integer(String="Facades")
@@ -39,8 +34,14 @@ class Property(models.Model):
     sales_id = fields.Many2one('res.users', String="Salesman")
     buyer_id = fields.Many2one('res.partner', String="Buyer", domain=[('is_company', '=', True)])
     phone = fields.Char(String="Phone", related= "buyer_id.phone")
+    currency_id = fields.Many2one("res.currency", string="Currency", default = lambda self: self.env.user.company_id.currency_id)
 
 
+
+    def _expand_state(self, state, domain, order):
+        return [
+            key for key, dummy in type(self).state.selection
+        ]
 
     @api.onchange('living_area', 'garden_area')
     def _onchange_total_area(self):
@@ -77,8 +78,6 @@ class Property(models.Model):
                 rec.best_offer = max(rec.offer_ids.mapped('price'))
             else:
                 rec.best_offer = 0
-
-
 
     # @api.depends('garden_area', 'living_area')
     # def _compute_total_area(self):
