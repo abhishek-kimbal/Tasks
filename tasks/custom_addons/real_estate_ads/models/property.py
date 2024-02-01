@@ -36,7 +36,9 @@ class Property(models.Model):
     phone = fields.Char(String="Phone", related= "buyer_id.phone")
     currency_id = fields.Many2one("res.currency", string="Currency", default = lambda self: self.env.user.company_id.currency_id)
 
-
+    def _get_report_base_filename(self):
+        self.ensure_one()
+        return 'Estate Property - %s' % self.name
 
     def _expand_state(self, state, domain, order):
         return [
